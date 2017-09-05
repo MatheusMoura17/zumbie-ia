@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class CharacterBase : MonoBehaviour {
+public abstract class CharacterBase:MonoBehaviour {
 
 	[Header("DefaultSettings")]
 	public int life = 100;
 	public int kills = 0;
 
-	[Header("Animation")]
+	[Header("Animation And Sound")]
 	public Animator myAnimator;
+	public AudioSource footstep;
 
 	[Header("DamageSettings")]
 	public GameObject damageObject;
@@ -35,10 +36,10 @@ public abstract class CharacterBase : MonoBehaviour {
 
 	public void Attack() {
 		if (Time.time > attackTimer) {
-			attackTimer =Time.time+attackRatio;
+			attackTimer = Time.time + attackRatio;
 			myAnimator.SetTrigger("attack");
 			damageObject.SetActive(true);
-			Invoke("DisableAtack", attackRatio/2);
+			Invoke("DisableAtack", attackRatio / 2);
 		}
 	}
 
@@ -47,6 +48,13 @@ public abstract class CharacterBase : MonoBehaviour {
 	}
 
 	public void SetRunningAnimation(bool running, int direction) {
+		if (running) {
+			if (!footstep.isPlaying) {
+				footstep.Play();
+			}
+		} else
+			footstep.Stop();
+
 		myAnimator.SetBool("running", running);
 		myAnimator.SetInteger("direction", direction);
 	}
