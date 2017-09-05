@@ -15,7 +15,8 @@ public abstract class CharacterBase : MonoBehaviour {
 	public GameObject damageObject;
 	private DamageAssistent damageAssistent;
 	public int damage = 5;
-	public float atackDuration = 0.2f;
+	public float attackRatio = 0.5f;
+	private float attackTimer = 0;
 
 	public bool isKilled;
 
@@ -33,9 +34,12 @@ public abstract class CharacterBase : MonoBehaviour {
 	}
 
 	public void Attack() {
-		myAnimator.SetTrigger("attack");
-		damageObject.SetActive(true);
-		Invoke("DisableAtack", atackDuration);
+		if (Time.time > attackTimer) {
+			attackTimer =Time.time+attackRatio;
+			myAnimator.SetTrigger("attack");
+			damageObject.SetActive(true);
+			Invoke("DisableAtack", attackRatio/2);
+		}
 	}
 
 	private void DisableAtack() {

@@ -329,7 +329,7 @@ MonoBehaviour:
   myAnimator: {fileID: 1506366447}
   damageObject: {fileID: 1506366438}
   damage: 5
-  atackDuration: 0.5
+  attackRatio: 1
   isKilled: 0
   target: {fileID: 2034168934}
 --- !u!195 &1506366440
@@ -486,6 +486,11 @@ Prefab:
       propertyPath: damageObject
       value: 
       objectReference: {fileID: 538560662}
+    - target: {fileID: 114213371506824116, guid: 3eea1ede9c38a1e4aa3c9f12ee50b976,
+        type: 2}
+      propertyPath: attackRatio
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3eea1ede9c38a1e4aa3c9f12ee50b976, type: 2}
   m_IsPrefabParent: 0
