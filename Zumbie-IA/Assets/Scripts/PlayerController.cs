@@ -23,19 +23,21 @@ public class PlayerController:CharacterBase {
 	// Update is called once per frame
 	void Update() {
 
-		isRunning = (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0);
+		if (!isKilled) {
+			isRunning = (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0);
 
-		if (Input.GetMouseButtonDown(0)) {
-			Attack();
+			if (Input.GetMouseButtonDown(0)) {
+				Attack();
+			}
+
+			if (isRunning) {
+				transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
+				Vector3 eulerAngles = transform.eulerAngles;
+				eulerAngles.y = Mathf.Lerp(eulerAngles.y, targetRotationLook.eulerAngles.y, rotateSpeed * Time.deltaTime);
+				transform.eulerAngles = eulerAngles;
+			}
+
+			SetRunningAnimation(isRunning, (int)Input.GetAxis("Horizontal"));
 		}
-
-		if (isRunning) {
-			transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
-			Vector3 eulerAngles = transform.eulerAngles;
-			eulerAngles.y = Mathf.Lerp(eulerAngles.y, targetRotationLook.eulerAngles.y, rotateSpeed * Time.deltaTime);
-			transform.eulerAngles = eulerAngles;
-		}
-
-		SetRunningAnimation(isRunning, (int)Input.GetAxis("Horizontal"));
 	}
 }
