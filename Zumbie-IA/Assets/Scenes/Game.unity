@@ -233,6 +233,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 49a0e923d39ec3c4c8bb97699e2f2903, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1048835244 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400002, guid: 49a0e923d39ec3c4c8bb97699e2f2903, type: 2}
+  m_PrefabInternal: {fileID: 739462519}
 --- !u!1 &1745594413
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,8 +360,19 @@ Prefab:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95221649321579012, guid: 014e59c99dc6fc44c8961cacfc4def4d,
+        type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6bbcd36b4ffbf1e429c28e1616ee016d, type: 2}
+    - target: {fileID: 143635377480688520, guid: 014e59c99dc6fc44c8961cacfc4def4d,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114440161237512592, guid: 014e59c99dc6fc44c8961cacfc4def4d, type: 2}
+    - {fileID: 143635377480688520, guid: 014e59c99dc6fc44c8961cacfc4def4d, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 014e59c99dc6fc44c8961cacfc4def4d, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2034168929 stripped
@@ -377,7 +392,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myAnimator: {fileID: 2034168933}
-  moveSpeed: 3
+  moveSpeed: 5
+  rotateSpeed: 10
+  targetRotationLook: {fileID: 1048835244}
 --- !u!95 &2034168933 stripped
 Animator:
   m_PrefabParentObject: {fileID: 95221649321579012, guid: 014e59c99dc6fc44c8961cacfc4def4d,
