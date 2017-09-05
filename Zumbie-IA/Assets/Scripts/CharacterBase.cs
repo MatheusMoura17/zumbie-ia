@@ -30,8 +30,9 @@ public abstract class CharacterBase : MonoBehaviour {
 		damageObject.SetActive(false);
 	}
 
-	public void SetRunningAnimation(bool running) {
+	public void SetRunningAnimation(bool running, int direction) {
 		myAnimator.SetBool("running", running);
+		myAnimator.SetInteger("direction", direction);
 	}
 
 	void OnTriggerEnter(Collider other) {

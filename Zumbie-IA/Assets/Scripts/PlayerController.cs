@@ -36,6 +36,6 @@ public class PlayerController:CharacterBase {
 			transform.eulerAngles = eulerAngles;
 		}
 
-		SetRunningAnimation(isRunning);
+		SetRunningAnimation(isRunning, (int)Input.GetAxis("Horizontal"));
 	}
 }
