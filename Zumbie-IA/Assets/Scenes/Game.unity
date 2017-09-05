@@ -224,7 +224,11 @@ Prefab:
       objectReference: {fileID: 2034168934}
     - target: {fileID: 11400000, guid: 49a0e923d39ec3c4c8bb97699e2f2903, type: 2}
       propertyPath: m_MoveSpeed
-      value: 15
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 49a0e923d39ec3c4c8bb97699e2f2903, type: 2}
+      propertyPath: m_TurnSmoothing
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 49a0e923d39ec3c4c8bb97699e2f2903, type: 2}
@@ -347,6 +351,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 95221649321579012, guid: 014e59c99dc6fc44c8961cacfc4def4d,
+        type: 2}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114440161237512592, guid: 014e59c99dc6fc44c8961cacfc4def4d, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 014e59c99dc6fc44c8961cacfc4def4d, type: 2}
@@ -368,6 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myAnimator: {fileID: 2034168933}
+  moveSpeed: 3
 --- !u!95 &2034168933 stripped
 Animator:
   m_PrefabParentObject: {fileID: 95221649321579012, guid: 014e59c99dc6fc44c8961cacfc4def4d,
