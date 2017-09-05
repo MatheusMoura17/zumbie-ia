@@ -1,25 +1,33 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController:MonoBehaviour {
+public class PlayerController:CharacterBase {
 
-	public Animator myAnimator;
+	[Header("Movement")]
 	public float moveSpeed = 3;
 	public float rotateSpeed = 10;
 	public Transform targetRotationLook;
 
 	private bool isRunning;
 
-	// Use this for initialization
-	void Start() {
+	public override void OnKilled() {
+		//atualizar hud
+	}
 
+	public override void OnReceiveHit() {
+		//atualizar hud
 	}
 
 	// Update is called once per frame
 	void Update() {
 
 		isRunning = (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0);
+
+		if (Input.GetMouseButtonDown(0)) {
+			Attack();
+		}
 
 		if (isRunning) {
 			transform.Translate(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
@@ -28,6 +36,6 @@ public class PlayerController:MonoBehaviour {
 			transform.eulerAngles = eulerAngles;
 		}
 
-		myAnimator.SetBool("running", isRunning);
+		SetRunningAnimation(isRunning);
 	}
 }
