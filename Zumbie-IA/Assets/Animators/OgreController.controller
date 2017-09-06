@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: FemaleController
+  m_Name: OgreController
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: running
@@ -436,7 +436,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 51f837379dd3c9b44b266f0f96f44cc4, type: 2}
+  m_Motion: {fileID: 7400000, guid: 79778f9840332d04194151a557784938, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -508,7 +508,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bc71e6273a29d9c4086a66c632a65315, type: 2}
+  m_Motion: {fileID: 7400000, guid: 033c866487e17894d8741c886d3fe5e8, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -532,7 +532,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 57878b9ea9f56754f87baf92a8ec5330, type: 2}
+  m_Motion: {fileID: 7400000, guid: aa321c312f4ead04383de8c5608e70a1, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -580,7 +580,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: dc29909526d23af419526cc4f7bbc137, type: 2}
+  m_Motion: {fileID: 7400000, guid: 535711705a2ab4a43b765bf72bb78241, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
