@@ -32,7 +32,6 @@ public class EnemyController:CharacterBase {
 
 		if (!isKilled) {
 			agent.destination = target.position;
-			Debug.Log(agent.velocity);
 			isRunning = agent.velocity!=Vector3.zero;
 			SetRunningAnimation(isRunning, 0);
 		}
