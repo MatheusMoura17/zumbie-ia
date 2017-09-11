@@ -108,6 +108,23 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 23800000, guid: 80247a87811cc7947a2d40ddbd84770c, type: 2}
+--- !u!1 &385147098 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1265458973199490, guid: 0e805cffbc7f84b4b95ef6f186d5a369,
+    type: 2}
+  m_PrefabInternal: {fileID: 1506366436}
+--- !u!114 &385147106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 385147098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd032df7de1a06449bfe61fc559f506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: followData.xlsx
 --- !u!1 &563958440
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,6 +302,10 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 2034168934}
+    - target: {fileID: 1786251715622088, guid: 534c26116db32004e979f4f4914ab9b2, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 534c26116db32004e979f4f4914ab9b2, type: 2}
   m_IsPrefabParent: 0
@@ -422,6 +443,10 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 2034168934}
+    - target: {fileID: 1715627258517926, guid: c820af0e3a3b764429ab722a405fc049, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c820af0e3a3b764429ab722a405fc049, type: 2}
   m_IsPrefabParent: 0
