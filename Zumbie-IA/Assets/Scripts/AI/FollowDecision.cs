@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Data;
-using Accord.IO;
 using System.IO;
 using Accord.Statistics.Filters;
 using Accord.Math;
@@ -11,6 +10,7 @@ using Accord.MachineLearning.DecisionTrees;
 using Accord.Math.Optimization.Losses;
 using Accord.MachineLearning;
 using System.Threading;
+using ExcelDataReader;
 
 public class FollowDecision:MonoBehaviour {
 
@@ -20,15 +20,32 @@ public class FollowDecision:MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		Classifier c = new Classifier();
+		//Classifier c = new Classifier();
 		Learning();
 	}
 
 	private void Learning() {
-		FileStream stream = new FileStream(Application.dataPath + DATA_PATCH + fileName,FileMode.Open);
-		ExcelReader reader = new ExcelReader(stream, fileName.Contains(".xlsx"));
-		DataTable data = reader.GetWorksheet(0);
-		Debug.Log(data.Columns.Count);
+		FileStream stream = File.Open(Application.dataPath + DATA_PATCH + fileName, FileMode.Open, FileAccess.Read);
+
+		//2. Reading from a OpenXml Excel file (2007 format; *.xlsx)
+		IExcelDataReader excelReader;
+
+		if(fileName.Contains(".xlsx"))
+			excelReader=ExcelReaderFactory.CreateOpenXmlReader(stream);
+		else
+			excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+		
+		//excelReader.IsFirstRowAsColumnNames = true;
+		DataSet result = excelReader.AsDataSet();
+
+		//5. Data Reader methods
+		while (excelReader.Read()) {
+			//excelReader.GetInt32(0);
+			Debug.Log(excelReader.GetValue(0));
+		}
+		//6. Free resources (IExcelDataReader is IDisposable)
+		excelReader.Close();
+
 	}
 
 	// Update is called once per frame
