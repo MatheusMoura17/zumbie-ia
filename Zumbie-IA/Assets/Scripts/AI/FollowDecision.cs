@@ -11,104 +11,102 @@ using Accord.Math.Optimization.Losses;
 using Accord.MachineLearning;
 using System.Threading;
 using ExcelDataReader;
+using System;
 
 public class FollowDecision:MonoBehaviour {
 
 	private const string DATA_PATCH = "/AIData/";
-
 	public string fileName = "followData.xlsx";
+
+	DecisionTree followTree;
+	Codification codebook;
 
 	// Use this for initialization
 	void Start() {
-		//Classifier c = new Classifier();
 		Learning();
 	}
 
 	private void Learning() {
-		FileStream stream = File.Open(Application.dataPath + DATA_PATCH + fileName, FileMode.Open, FileAccess.Read);
-
-		//2. Reading from a OpenXml Excel file (2007 format; *.xlsx)
-		IExcelDataReader excelReader;
-
-		if(fileName.Contains(".xlsx"))
-			excelReader=ExcelReaderFactory.CreateOpenXmlReader(stream);
-		else
-			excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
-		
-		//excelReader.IsFirstRowAsColumnNames = true;
-		DataSet result = excelReader.AsDataSet();
-
-		//5. Data Reader methods
-		while (excelReader.Read()) {
-			//excelReader.GetInt32(0);
-			Debug.Log(excelReader.GetValue(0));
-		}
-		//6. Free resources (IExcelDataReader is IDisposable)
-		excelReader.Close();
-
-	}
-
-	// Update is called once per frame
-	void Update() {
-
-	}
-}
-
-public class Classifier {
-
-	public Classifier() {
-		DataTable data = new DataTable("Fruits");
-		data.Columns.Add("Color");
-		data.Columns.Add("Format");
-		data.Columns.Add("Class");
-
-		data.Rows.Add("red", "rounded", "apple");
-		data.Rows.Add("yellow", "rounded", "limon");
-		data.Rows.Add("yellow", "lenghty", "banana");
-
-		var codebook = new Codification(data);
-
-		// Translate our training data into integer symbols using our codebook:
+		DataTable data = GetDataTable(Application.dataPath + DATA_PATCH + fileName);
+		DebugTable(data);
+		codebook = new Codification(data);
 		DataTable symbols = codebook.Apply(data);
-		int[][] inputs = symbols.ToArray<int>("Color", "Format");
-		int[] outputs = symbols.ToArray<int>("Class");
+		int[][] inputs = symbols.ToArray<int>("NAME", "LIFE","DISTANCE","ATTACKING");
+		int[] outputs = symbols.ToArray<int>("NAME");
 
-		var id3learning = new ID3Learning()
-		{
-				// Now that we already have our learning input/ouput pairs, we should specify our
-				// decision tree. We will be trying to build a tree to predict the last column, entitled
-				// “PlayTennis”. For this, we will be using the “Outlook”, “Temperature”, “Humidity” and
-				// “Wind” as predictors (variables which will we will use for our decision). Since those
-				// are categorical, we must specify, at the moment of creation of our tree, the
-				// characteristics of each of those variables. So:
+		var id3learning = new ID3Learning();
+		id3learning.Attributes = DecisionVariable.FromCodebook(codebook);
 
-				new DecisionVariable("Color",     2), // 3 possible values (Sunny, overcast, rain)
-				new DecisionVariable("Rounded", 2), // 3 possible values (Hot, mild, cool)  
+		followTree = id3learning.Learn(inputs, outputs);
 
-				// Note: It is also possible to create a DecisionVariable[] from a codebook:
-				// DecisionVariable[] attributes = DecisionVariable.FromCodebook(codebook);
-			};
+		double error = new ZeroOneLoss(outputs).Loss(followTree.Decide(inputs));
+	}
 
-		DecisionTree tree = id3learning.Learn(inputs, outputs);
-
-		// Compute the training error when predicting training instances
-		double error = new ZeroOneLoss(outputs).Loss(tree.Decide(inputs));
-
-		// The tree can now be queried for new examples through 
-		// its decide method. For example, we can create a query
-
+	private void Classifier(string name, string life, string distance, string attacking) {
 		int[] query = codebook.Transform(new[,]
 			{
-					{ "Color",   "yellow"  },
-					{ "Format",  "rounded"    }
+					{ "NAME",		name },
+					{ "LIFE",		life },
+					{ "DISTANCE",	distance},
+					{ "ATTACKING",  attacking }
 				});
 
-		// And then predict the label using
-		int predicted = tree.Decide(query);  // result will be 0
+		int predicted = followTree.Decide(query);
 
-		// We can translate it back to strings using
-		string answer = codebook.Revert("Class", predicted); // Answer will be: "No"
+		string answer = codebook.Revert("NAME", predicted);
 		Debug.Log(answer);
+	}
 
+	public void DebugTable(DataTable table) {
+		string a = "";
+		a+=("--- DebugTable(" + table.TableName + ") ---\n");
+		int zeilen = table.Rows.Count;
+		int spalten = table.Columns.Count;
+
+		// Header
+		for (int i = 0; i < table.Columns.Count; i++) {
+			string s = table.Columns[i].ToString();
+			a+=(String.Format("{0,-20} | ", s));
+		}
+		a+=(Environment.NewLine);
+		for (int i = 0; i < table.Columns.Count; i++) {
+			a+=("---------------------|-");
+		}
+		a+=(Environment.NewLine);
+
+		// Data
+		for (int i = 0; i < zeilen; i++) {
+			DataRow row = table.Rows[i];
+			//Debug.WriteLine("{0} {1} ", row[0], row[1]);
+			for (int j = 0; j < spalten; j++) {
+				string s = row[j].ToString();
+				if (s.Length > 20) s = s.Substring(0, 17) + "...";
+				a += (String.Format("{0,-20} | ", s));
+			}
+			a += (Environment.NewLine);
+		}
+		for (int i = 0; i < table.Columns.Count; i++) {
+			a += ("---------------------|-");
+		}
+		a += (Environment.NewLine);
+		Debug.Log(a);
+	}
+
+	private DataTable GetDataTable(string patch) {
+		DataTable dt = new DataTable();
+
+		FileStream stream = File.Open(patch, FileMode.Open, FileAccess.Read);
+		IExcelDataReader excelReader;
+
+		if (fileName.Contains(".xlsx"))
+			excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+		else
+			excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+
+		DataSet result = excelReader.AsDataSet();
+
+		excelReader.Close();
+
+		return result.Tables[0];
 	}
 }
