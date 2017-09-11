@@ -34,7 +34,7 @@ public class FollowDecision:MonoBehaviour {
 		DebugTable(data);
 		codebook = new Codification(data);
 		DataTable symbols = codebook.Apply(data);
-		int[][] inputs = symbols.ToArray<int>("NAME", "LIFE","DISTANCE","ATTACKING");
+		int[][] inputs = symbols.ToArray<int>("NAME", "LIFE", "DISTANCE", "ATTACKING");
 		int[] outputs = symbols.ToArray<int>("NAME");
 
 		var id3learning = new ID3Learning();
@@ -42,41 +42,46 @@ public class FollowDecision:MonoBehaviour {
 
 		followTree = id3learning.Learn(inputs, outputs);
 
-		//double error = new ZeroOneLoss(outputs).Loss(followTree.Decide(inputs));
+		double error = new ZeroOneLoss(outputs).Loss(followTree.Decide(inputs));
 		followTree.Save(Application.dataPath + DATA_PATCH + treeFile);
+		Debug.Log(Rank("enemy1", "0", "60", "0"));
 	}
 
-	private void Rank(string name, string life, string distance, string attacking) {
+	private string Rank(string name, string life, string distance, string attacking) {
+		try {
 		int[] query = codebook.Transform(new[,]
 			{
-					{ "NAME",		name },
-					{ "LIFE",		life },
-					{ "DISTANCE",	distance},
-					{ "ATTACKING",  attacking }
-				});
+				{ "NAME",       name },
+				{ "LIFE",       life },
+				{ "DISTANCE",   distance},
+				{ "ATTACKING",  attacking }
+			});
 
 		int predicted = followTree.Decide(query);
 
 		string answer = codebook.Revert("NAME", predicted);
-		Debug.Log(answer);
+		return answer;
+		} catch (Exception) {
+			return "idle";
+		}
 	}
 
 	public void DebugTable(DataTable table) {
 		string a = "";
-		a+=("--- DebugTable(" + table.TableName + ") ---\n");
+		a += ("--- DebugTable(" + table.TableName + ") ---\n");
 		int zeilen = table.Rows.Count;
 		int spalten = table.Columns.Count;
 
 		// Header
 		for (int i = 0; i < table.Columns.Count; i++) {
 			string s = table.Columns[i].ToString();
-			a+=(String.Format("{0,-20} | ", s));
+			a += (String.Format("{0,-20} | ", s));
 		}
-		a+=(Environment.NewLine);
+		a += (Environment.NewLine);
 		for (int i = 0; i < table.Columns.Count; i++) {
-			a+=("---------------------|-");
+			a += ("---------------------|-");
 		}
-		a+=(Environment.NewLine);
+		a += (Environment.NewLine);
 
 		// Data
 		for (int i = 0; i < zeilen; i++) {

@@ -655,6 +655,7 @@ GameObject:
   - component: {fileID: 136111104623826382}
   - component: {fileID: 114103105031147498}
   - component: {fileID: 195672545754086934}
+  - component: {fileID: 114685269704051026}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -5024,7 +5025,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1265458973199490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 189.90001, y: 0.64, z: 264.78}
+  m_LocalPosition: {x: 189.90001, y: 1.155, z: 264.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4335575265350730}
@@ -5418,6 +5419,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Owner: {fileID: 0}
   damage: 0
+--- !u!114 &114685269704051026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1265458973199490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd032df7de1a06449bfe61fc559f506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treeFile: followTree.tree
+  fileName: followData.xlsx
 --- !u!135 &135683715003084862
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -5471,7 +5485,7 @@ SkinnedMeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 1.70298
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6327,7 +6341,7 @@ SkinnedMeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 2.3369205
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6754,7 +6768,7 @@ SkinnedMeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 2.3745065
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7184,7 +7198,7 @@ SkinnedMeshRenderer:
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
+  m_ScaleInLightmap: 1.805382
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7614,7 +7628,7 @@ LODGroup:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1265458973199490}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0.9272151, z: -0.0066566765}
+  m_LocalReferencePoint: {x: 0, y: 0.927215, z: -0.0066428483}
   m_Size: 1.930438
   m_FadeMode: 0
   m_AnimateCrossFading: 0
