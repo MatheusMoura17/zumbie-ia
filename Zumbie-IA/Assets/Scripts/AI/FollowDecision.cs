@@ -16,6 +16,8 @@ using System;
 public class FollowDecision:MonoBehaviour {
 
 	private const string DATA_PATCH = "/AIData/";
+
+	public string treeFile = "follow.tree";
 	public string fileName = "followData.xlsx";
 
 	DecisionTree followTree;
@@ -23,6 +25,7 @@ public class FollowDecision:MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
+		//followTree = DecisionTree.Load(Application.dataPath + DATA_PATCH + treeFile);
 		Learning();
 	}
 
@@ -40,6 +43,7 @@ public class FollowDecision:MonoBehaviour {
 		followTree = id3learning.Learn(inputs, outputs);
 
 		double error = new ZeroOneLoss(outputs).Loss(followTree.Decide(inputs));
+		followTree.Save(Application.dataPath + DATA_PATCH + treeFile);
 	}
 
 	private void Classifier(string name, string life, string distance, string attacking) {
