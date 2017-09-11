@@ -38,15 +38,15 @@ public class FollowDecision:MonoBehaviour {
 		int[] outputs = symbols.ToArray<int>("NAME");
 
 		var id3learning = new ID3Learning();
-		id3learning.Attributes = DecisionVariable.FromCodebook(codebook);
+		id3learning.Attributes = DecisionVariable.FromData(inputs);
 
 		followTree = id3learning.Learn(inputs, outputs);
 
-		double error = new ZeroOneLoss(outputs).Loss(followTree.Decide(inputs));
+		//double error = new ZeroOneLoss(outputs).Loss(followTree.Decide(inputs));
 		followTree.Save(Application.dataPath + DATA_PATCH + treeFile);
 	}
 
-	private void Classifier(string name, string life, string distance, string attacking) {
+	private void Rank(string name, string life, string distance, string attacking) {
 		int[] query = codebook.Transform(new[,]
 			{
 					{ "NAME",		name },
@@ -107,8 +107,11 @@ public class FollowDecision:MonoBehaviour {
 		else
 			excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
 
-		DataSet result = excelReader.AsDataSet();
-
+		DataSet result = excelReader.AsDataSet(new ExcelDataSetConfiguration() {
+			ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration() {
+				UseHeaderRow = true
+			}
+		});
 		excelReader.Close();
 
 		return result.Tables[0];
