@@ -15,6 +15,8 @@ using System;
 
 public class FollowDecision:MonoBehaviour {
 
+	public EnemyController[] enemyList;
+
 	private const string DATA_PATCH = "/AIData/";
 
 	public string treeFile = "follow.tree";
@@ -27,6 +29,9 @@ public class FollowDecision:MonoBehaviour {
 	void Start() {
 		//followTree = DecisionTree.Load(Application.dataPath + DATA_PATCH + treeFile);
 		Learning();
+		foreach (EnemyController enemy in enemyList) {
+			enemy.DefineTarget();
+		}
 	}
 
 	private void Learning() {
@@ -34,8 +39,8 @@ public class FollowDecision:MonoBehaviour {
 		DebugTable(data);
 		codebook = new Codification(data);
 		DataTable symbols = codebook.Apply(data);
-		int[][] inputs = symbols.ToArray<int>("NAME", "LIFE", "DISTANCE", "ATTACKING");
-		int[] outputs = symbols.ToArray<int>("NAME");
+		int[][] inputs = symbols.ToArray<int>("CHARACTER_CLASS", "FRIEND", "LIFE", "DISTANCE");
+		int[] outputs = symbols.ToArray<int>("FOLLOW");
 
 		var id3learning = new ID3Learning();
 		id3learning.Attributes = DecisionVariable.FromData(inputs);
@@ -44,25 +49,45 @@ public class FollowDecision:MonoBehaviour {
 
 		double error = new ZeroOneLoss(outputs).Loss(followTree.Decide(inputs));
 		followTree.Save(Application.dataPath + DATA_PATCH + treeFile);
-		Debug.Log(Rank("enemy1", "0", "60", "0"));
 	}
 
-	private string Rank(string name, string life, string distance, string attacking) {
+	public EnemyController FindEnemy(EnemyController currentEnemy) {
+		foreach (EnemyController enemy in enemyList) {
+
+			string distance = ">=0";
+			float realDistance = UnityEngine.Vector3.Distance(currentEnemy.transform.position, enemy.transform.position);
+			if (realDistance <= 60)
+				distance = "<=60";
+
+			string life = "<=0";
+			if (enemy.life >= 50)
+				life = ">=50";
+
+			string friend = enemy.characterClass == currentEnemy.characterClass ? "True" : "False";
+
+			if (Rank(enemy.characterClass.ToString(), friend, life, distance))
+				return enemy;
+		}
+		return null;
+	}
+
+	private bool Rank(string characterClass, string friend, string life, string distance) {
 		try {
-		int[] query = codebook.Transform(new[,]
-			{
-				{ "NAME",       name },
-				{ "LIFE",       life },
-				{ "DISTANCE",   distance},
-				{ "ATTACKING",  attacking }
+			int[] query = codebook.Transform(new[,]
+				{
+				{ "CHARACTER_CLASS",	characterClass },
+				{ "FRIEND", friend},
+				{ "LIFE",				life },
+				{ "DISTANCE",			distance}
 			});
 
-		int predicted = followTree.Decide(query);
+			int predicted = followTree.Decide(query);
 
-		string answer = codebook.Revert("NAME", predicted);
-		return answer;
+			string answer = codebook.Revert("FOLLOW", predicted);
+			Debug.Log(name + " : " + answer);
+			return answer == "True" ? true : false;
 		} catch (Exception) {
-			return "idle";
+			return false;
 		}
 	}
 

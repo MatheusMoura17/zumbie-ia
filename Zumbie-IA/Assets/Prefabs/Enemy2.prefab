@@ -5405,6 +5405,7 @@ MonoBehaviour:
   attackRatio: 1
   isKilled: 0
   target: {fileID: 0}
+  characterClass: 1
 --- !u!114 &114618085315338668
 MonoBehaviour:
   m_ObjectHideFlags: 1

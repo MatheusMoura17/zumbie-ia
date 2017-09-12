@@ -5418,6 +5418,7 @@ MonoBehaviour:
   attackRatio: 0.5
   isKilled: 0
   target: {fileID: 0}
+  characterClass: 0
 --- !u!135 &135688760151960900
 SphereCollider:
   m_ObjectHideFlags: 1
