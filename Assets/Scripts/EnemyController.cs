@@ -23,6 +23,7 @@ public class EnemyController:CharacterBase {
 	private bool isRunning;
 
 	private void Start() {
+		Init();
 		agent = GetComponent<NavMeshAgent>();
 		agent.autoBraking = true;
 	}

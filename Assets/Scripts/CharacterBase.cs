@@ -28,7 +28,7 @@ public abstract class CharacterBase:MonoBehaviour {
 		kills++;
 	}
 
-	private void Start() {
+	public void Init() {
 		damageAssistent = damageObject.GetComponent<DamageAssistent>();
 		damageAssistent.damage = damage;
 		damageAssistent.Owner = this;
